@@ -203,3 +203,22 @@ Player* Matchmaking::formGroup(int groupSize, int delta, int* n) {
     *n = 0;
     return nullptr;
 }
+
+// Questão 6
+Player* Matchmaking::getWaitingPlayers(int* n) {
+
+    // Fila vazia, nao devolve nada
+    if (this->size == 0) {
+        *n = 0;
+        return nullptr;
+    }
+
+    // Array novo so com as copias dos jogadores
+    Player* copia = new Player[this->size];
+    for (int i = 0; i < this->size; i++) {
+        copia[i] = this->players[i];
+    }
+
+    *n = this->size;
+    return copia;
+}
