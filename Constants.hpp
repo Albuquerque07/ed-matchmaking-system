@@ -1,0 +1,1 @@
+const int MAX_PLAYERS = 1000;
