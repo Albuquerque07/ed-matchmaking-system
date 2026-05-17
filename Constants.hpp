@@ -1,1 +1,1 @@
-const int MAX_PLAYERS = 1000;
+const int MAX_PLAYERS = 100000;

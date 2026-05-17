@@ -1,6 +1,14 @@
 #include "Player.hpp"
 using namespace std;
 
+Player::Player(){
+    this->id = 0;
+    this->name = "";
+    this->score = 0;
+    this->timestamp = 0;
+
+}
+
 Player::Player(int id, string name, int score, int timestamp) {
     this->id = id;
     this->name = name;
