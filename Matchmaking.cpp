@@ -222,3 +222,24 @@ Player* Matchmaking::getWaitingPlayers(int* n) {
     *n = this->size;
     return copia;
 }
+
+// Questão 7
+void Matchmaking::printWaitingPlayers(){
+    cout << "Waiting Players:" << endl;
+    if(size == 0){
+        cout << "(empty)" << endl;
+        return;
+    }
+
+    for(int i = 0; i < size; i++){
+        cout << "["
+        << players[i].getId()
+        << " | "
+        << players[i].getName()
+        << " | "
+        << players[i].getScore()
+        << " | "
+        << players[i].getTimestamp()
+        << "]" << endl;
+    }
+}

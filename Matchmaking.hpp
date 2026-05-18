@@ -1,3 +1,6 @@
+#ifndef MATCHMAKING_HPP
+#define MATCHMAKING_HPP
+
 #include "Player.hpp"
 #include "Constants.hpp"
 
@@ -27,3 +30,5 @@ public:
 
     // Outros métodos auxiliares, se necessário
 };
+
+#endif

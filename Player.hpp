@@ -1,3 +1,6 @@
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
+
 #include <string>
 using namespace std;
 
@@ -20,3 +23,5 @@ public:
     int getScore();
     int getTimestamp();
 };
+
+#endif

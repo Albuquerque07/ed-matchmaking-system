@@ -7,7 +7,7 @@
 using namespace std;
 
 int main() {
-    Matchmaking match;
+    static Matchmaking match;
     int n = 0;
     Player* grupo = nullptr;
 
@@ -58,6 +58,65 @@ int main() {
     match.printWaitingPlayers(); // Fila após a remoção dos 3 primeiros
 
     delete [] grupo; // Criei o ponteiro no início do main de teste, tem que riscar o cpf dele agora
+
+    // Remoção de jogador
+    cout << "\n=== Teste: Remocao ===" << endl;
+    static Matchmaking matchRemocao;
+    matchRemocao.insert(Player(1, "Ana",   1000, 1));
+    matchRemocao.insert(Player(2, "Bruno", 1100, 2));
+    matchRemocao.insert(Player(3, "Carla", 1250, 3));
+    bool removido = matchRemocao.removePlayer(2);      // ID existente
+    cout << "Remover ID 2: " << (removido ? "true" : "false") << endl;
+    bool naoEncontrado = matchRemocao.removePlayer(99); // ID inexistente
+    cout << "Remover ID 99: " << (naoEncontrado ? "true" : "false") << endl;
+    matchRemocao.printWaitingPlayers();
+
+    // Insertion sort
+    cout << "\n=== Teste: Insertion Sort ===" << endl;
+    static Matchmaking matchInsertion;
+    matchInsertion.insert(Player(1, "Magnus Carlsen", 2880, 5));
+    matchInsertion.insert(Player(2, "Hikaru Nakamura", 2740, 2));
+    matchInsertion.insert(Player(3, "Praggnanandhaa", 2700, 1));
+    matchInsertion.insert(Player(4, "Krikor Mekhitarian", 2500, 4));
+    matchInsertion.insert(Player(5, "Supi", 2580, 3));
+
+    auto startIns = chrono::high_resolution_clock::now();
+    matchInsertion.sortByScoreInsertion();
+    auto endIns = chrono::high_resolution_clock::now();
+    chrono::duration<double, std::milli> durIns = endIns - startIns;
+    cout << "Tempo insertion sort: " << durIns.count() << " ms\n";
+    matchInsertion.printWaitingPlayers();
+
+    // Empate de score (desempate por timestamp)
+    cout << "\n=== Teste: Empate de Score ===" << endl;
+    static Matchmaking matchEmpate;
+    matchEmpate.insert(Player(1, "Ana",   1000, 5));
+    matchEmpate.insert(Player(2, "Bruno", 900,  2));
+    matchEmpate.insert(Player(3, "Carla", 1000, 1));
+    matchEmpate.insert(Player(4, "Diego", 900,  4));
+    matchEmpate.sortByScoreMerge();
+    matchEmpate.printWaitingPlayers();
+    // Esperado: Bruno(900,t2), Diego(900,t4), Carla(1000,t1), Ana(1000,t5)
+
+    // getWaitingPlayers
+    cout << "\n=== Teste: getWaitingPlayers ===" << endl;
+    Player* jogadores = nullptr;
+    static Matchmaking matchGet;
+    matchGet.insert(Player(1, "Ana",   1000, 1));
+    matchGet.insert(Player(2, "Bruno", 1100, 2));
+    jogadores = matchGet.getWaitingPlayers(&n);
+    cout << "Total retornado: " << n << endl;
+    for (int i = 0; i < n; i++) {
+        cout << "[" << jogadores[i].getId() << " | " << jogadores[i].getName()
+             << " | " << jogadores[i].getScore() << " | " << jogadores[i].getTimestamp() << "]" << endl;
+    }
+    delete[] jogadores;
+
+    // getWaitingPlayers com fila vazia
+    static Matchmaking matchVazio;
+    jogadores = matchVazio.getWaitingPlayers(&n);
+    cout << "Fila vazia - retorno: " << (jogadores == nullptr ? "nullptr" : "array") << ", n = " << n << endl;
+    matchVazio.printWaitingPlayers();
 
     return 0;
 }
